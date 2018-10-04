@@ -112,12 +112,12 @@ def handleKeyboard():
 def start():
     global KeyboardThread
 
-    print "starting keyboardModule..."
+    print("starting keyboardModule...")
     KeyboardThread = threading.Thread(target=handleKeyboard)
     KeyboardThread.daemon = True
     KeyboardThread.start()
 
 def stop():
     global runFlag
-    print "stopping keyboardModule..."
+    print("stopping keyboardModule...")
     runFlag = False

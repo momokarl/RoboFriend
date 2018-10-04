@@ -30,10 +30,9 @@ def sendtogui(i):
     BytesToSend = bytes(":RUN:" + str(i) + ":EOL:")
     try:
         SendToApp.sendto(BytesToSend, (IP, UDP_PORT+1))
-    except socket.error, msg:
-        print 'Error Code: ' + str(msg[0]) + 'Message ' + msg[1]
+    except OSError as msg:
+        print("Error Code: {}, Message: {}".format(str(msg[0]), str(msg[1])))
         IP = ''
-
 # This function is used as Thread to always listen if there is a client (gamegui) sending commands
 def data_listener():
     global IP, runFlag
@@ -135,7 +134,7 @@ def start():
 
     if not initDone:
         initDone = True
-        print "starting gameCommunicator..."
+        print("starting gameCommunicator...")
         SendToApp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # UDP
         if (len(sys.argv) == 2):
             # Handle command line arguments to get IP address
@@ -153,6 +152,6 @@ def start():
 
 def stop():
     global runFlag, SendToApp
-    print "stopping gameCommunicator..."
+    print("stopping gameCommunicator...")
     runFlag = False
     SendToApp.close()

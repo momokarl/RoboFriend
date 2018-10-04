@@ -20,7 +20,7 @@ def sendToIOWarrior(earColorR, earColorG, earColorB, cameraPos = None):
     cmd = 'sudo ./iowarrior/iow ' + str(int(round(earColorR))) + ' ' + str(int(round(earColorG))) + ' ' + str(int(round(earColorB)))
     if cameraPos:
         cmd = cmd + ' ' + str(cameraPos)
-    print "starting cmd: " + cmd
+    print("starting cmd: {}".format(cmd)) 
     os.system(cmd)
 
 def changeCameraPos(diff):
@@ -78,9 +78,9 @@ def getNewRandomColor(oldColor, factor):
 
 def stop():
     global runFlag
-    print "stopping ioWarriorModule..."
+    print("stopping ioWarriorModule...")
     stopRandomEarColor()
 
 #init
-print "initializing ioWarriorModule..."
+print("initializing ioWarriorModule...")
 sendToIOWarrior(earColorR, earColorG, earColorB, cameraPos)
