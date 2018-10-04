@@ -1,3 +1,8 @@
+""" 
+TODO: Replace print function with the origin function 
+      (return sendSerial("R", True)) when teensy connected
+"""
+
 import serial
 import threading
 from time import sleep
@@ -8,7 +13,7 @@ ser = None
 driveDuration = 50
 
 #init
-print "initializing teensyCommunicator..."
+print("initializing teensyCommunicator...")
 try:
     ser = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
     print('***Serial for Teensy opened***')
@@ -86,7 +91,9 @@ def shakeHeadForNo():
     sendSerial("D -50 50 10")
 
 def getRawStatus():
-    return sendSerial("R", True)
+#    return sendSerial("R", True)
+    print('***Faking Teensy Values !! ***')
+    return ("Sensors,0500,0200,0100,0300\n")
 
 def sendSerial(commandString, readResponse=False):
     global send_lock, ser
@@ -106,5 +113,5 @@ def sendSerial(commandString, readResponse=False):
 
 def stop():
     global ser
-    print "stopping teensyCommunicator..."
+    print("stopping teensyCommunicator...")
     ser.close()

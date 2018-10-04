@@ -1,3 +1,8 @@
+"""
+TODO: Uncomment the speechEngine lines in case of a working speech
+      engine
+"""
+
 # -*- coding: utf-8 -*-
 
 import pyttsx3
@@ -10,7 +15,7 @@ import statusModule
 lastSpeakTimestamp = time.time()
 lastSpeakWord = None
 wordRate = 140 #words per minute
-speechEngine = pyttsx3.init(debug=True)
+#speechEngine = pyttsx3.init(debug=True)
 language = 'german'
 runFlag = True
 
@@ -18,18 +23,18 @@ def speak(text, disablesIdle = True):
     global speechEngine, lastSpeakWord
     if disablesIdle:
         statusModule.setNonIdle()
-    print "speaking: " + text
+    print("speaking: {}".format(text))
     lastSpeakWord = text
     text = text.lower()
     text = text.replace('e', 'e')
     text = text.replace('oe', 'oe')
     text = text.replace('u', 'u')
     text = text.replace('ss', 'ss')
-    try:
-        speechEngine.say(text)
-        speechEngine.runAndWait()
-    except:
-        print "speech engine error!"
+#    try:
+#        speechEngine.say(text)
+#        speechEngine.runAndWait()
+#    except:
+#        print("speech engine error!")
 
 def speakRandom(additionalTexts = None, disablesIdle = True):
     global lastSpeakTimestamp, language, lastSpeakWord
@@ -131,9 +136,9 @@ def stop():
     runFlag = False
 
 #init
-print "initializing speechModule..."
-speechEngine.setProperty('rate', wordRate)
-speechEngine.setProperty('volume', 1.0)
-speak('i am robofriend')
-speechEngine.setProperty('voice', language)
+print("initializing speechModule...")
+#speechEngine.setProperty('rate', wordRate)
+#speechEngine.setProperty('volume', 1.0)
+#speak('i am robofriend')
+#speechEngine.setProperty('voice', language)
 #startAutoRandomSpeak()
