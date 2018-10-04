@@ -3,17 +3,22 @@
 # external modules
 import signal
 import time
+import sys
+
+sys.path.append("/home/pi/project/RoboFriend/src/Pi/python")
 
 # own modules
-import python.faceModule as faceModule
-import python.rfidModule as rfidModule
-import python.webserverModule as webserverModule
-import python.statusModule as statusModule
-import python.gameCommunicator as gameCommunicator
-import python.keyboardModule as keyboardModule
-import python.teensyCommunicator as teensyCommunicator
-import python.ioWarriorModule as ioWarriorModule
-import python.speechModule as speechModule
+import faceModule as faceModule
+import rfidModule as rfidModule
+import webserverModule as webserverModule
+import statusModule as statusModule
+import gameCommunicator as gameCommunicator
+import keyboardModule as keyboardModule
+import teensyCommunicator as teensyCommunicator
+import ioWarriorModule as ioWarriorModule
+import speechModule as speechModule
+
+
 
 # globals
 runFlag = True
