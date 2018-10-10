@@ -17,7 +17,7 @@ import keyboardModule as keyboardModule
 import teensyCommunicator as teensyCommunicator
 import ioWarriorModule as ioWarriorModule
 import speechModule as speechModule
-
+import listener as listener 
 
 
 # globals
@@ -52,6 +52,7 @@ def main():
 	gameCommunicator.start()
 	keyboardModule.start()
 	faceModule.drawFace()
+	listener.listener()
 	print("init done! register signal handlers...")
 
 	# setting up signal handlers for shutdown
