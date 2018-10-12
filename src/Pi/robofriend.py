@@ -4,8 +4,10 @@
 import signal
 import time
 import sys
+import os
 
-sys.path.append("/home/pi/project/RoboFriend/src/Pi/python")
+path = str(os.getcwd()) + "/python"
+sys.path.append(path)
 
 # own modules
 import faceModule as faceModule
@@ -17,7 +19,7 @@ import keyboardModule as keyboardModule
 import teensyCommunicator as teensyCommunicator
 import ioWarriorModule as ioWarriorModule
 import speechModule as speechModule
-import listener as listener 
+import listener as listener
 
 
 # globals
