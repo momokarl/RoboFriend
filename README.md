@@ -8,18 +8,18 @@ For this purpose, several game applications were developed which involve robot m
 
 
 ## Features
-* live video transmission (low latency, < 300ms) 
+* live video transmission (low latency, < 300ms)
 * remote control via webbrowser or game apps
 * proximity sensors for collision avoidance & activity detection
 * facial expressions, sound/voice playback, illuminated ears
 * RFID reader - utilized for game interaction
 * unique design (with CRT-head) by Tom Heike
- 
+
 ## System Architecture / Components
 
-The Robofriend uses a Teensy++ 2.0 microcontroller to handle motor control, led lights, servos, proximity sensors and battery status... 
+The Robofriend uses a Teensy++ 2.0 microcontroller to handle motor control, led lights, servos, proximity sensors and battery status...
 The Teensy is connected to the RaspberryPi via USB (/dev/ttyACM0). The RaspberryPi communicates with the Teensy via a simple protocol (ASCII-commands).
-The RaspberryPi handles most of the robot's functions such as: RFID reader, CRT monitor, video camera, LED ears, speech output, ... 
+The RaspberryPi handles most of the robot's functions such as: RFID reader, CRT monitor, video camera, LED ears, speech output, ...
 
 ## User Interface and Control Options
 
@@ -27,10 +27,21 @@ The RaspberryPi starts a webserver which provides a webpage with live video feed
 It can be reached via http://<ip-adress-of-raspberry>:8765
 
 The webpage uses an API to control the robots functions - this API is described in the theses of Karima Khlousy Neirukh (folder /documentation).
-Furthermore, dedicated games have been developed by Karima which utilize the RFID-reader so that kids can use physical objects to interact with the robo and play litte games (identify animal sounds, emotions etc.) 
+Furthermore, dedicated games have been developed by Karima which utilize the RFID-reader so that kids can use physical objects to interact with the robo and play litte games (identify animal sounds, emotions etc.)
 These game applications are also written in python and are usually launched on a seperated tablet computer. The tablet connect to the python main script via a UDP connection (port 9000) and uses the same commands as the web GUI. It is planned to use a REST API for both (webpage and tablet GUI).
 
 ## Requirements
+
+To get the existing Python2 code compatible for Python3 following packages should be installed:
+*  mjpg-streamer: [MJPEG-Streamer Install & Setup] https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&-Setup-&-FFMpeg-Recording
+* speech engine:
+  * pip install pyttsx3
+  * (pip install pyttsx --user)
+  * sudo apt-get update && sudo apt-get install espeak
+* pygame: python3 -m pip install -U pygame --user
+* serial: pip install pyserial --user
+* flask: pip install flask
+* yaml: pip3 install pyyaml --user
 
 Following packages should be installed:
 * mjpg-streamer: apt-get install -y gstreamer1.0-x gstreamer1.0-omx gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-alsa gstreamer1.0-libav
@@ -44,7 +55,7 @@ Startup scripts are provided in folder /src/Pi/scripts
 
 ## Future Plans
 
-As next steps, several high-levels skills for Robofriend are planned: 
+As next steps, several high-levels skills for Robofriend are planned:
 * indoor localisation using IR / BLE-beacons (in order to find charging station)
 * speech interaction (mic-array, beamforming, DOA, hotword detection)
 * image analysis of live camera feed (face detection, facial landmark classification)
