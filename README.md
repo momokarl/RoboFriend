@@ -32,8 +32,8 @@ These game applications are also written in python and are usually launched on a
 
 ## Requirements
 
-To get the existing Python2 code compatible for Python3 following packages should be installed:
-*  mjpg-streamer: [MJPEG-Streamer Install & Setup] https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&-Setup-&-FFMpeg-Recording
+To get the existing *Python2* code compatible for *Python3* following packages should be installed:
+*  mjpg-streamer: [MJPEG-Streamer Install & Setup] (https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&-Setup-&-FFMpeg-Recording)
 * speech engine:
   * pip install pyttsx3
   * (pip install pyttsx --user)
@@ -43,11 +43,22 @@ To get the existing Python2 code compatible for Python3 following packages shoul
 * flask: pip install flask
 * yaml: pip3 install pyyaml --user
 
-Following packages should be installed:
-* mjpg-streamer: apt-get install -y gstreamer1.0-x gstreamer1.0-omx gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-alsa gstreamer1.0-libav
-* espeak: apt-get install espeak
-* python 2.7: apt-get install -y python python-pygame python-tk python-serial python-picamera python-pip
-* python packages: pyttsx
+**OpenCV 3:**
+* to install OpenCV 3 on a Raspberry Pi 3 follow the following tutorial (except the virtual environment part):
+[OpenCV 3 on Raspberry Pi 3] (https://www.pyimagesearch.com/2017/09/04/raspbian-stretch-install-opencv-3-python-on-your-raspberry-pi/)
+
+**Roboter Operating System (ROS):**
+* to install ROS on a Rasberry Pi 3 follow the following tutorial:
+[ROS on Raspberry PI 3]: (https://www.intorobotics.com/how-to-install-ros-kinetic-on-raspberry-pi-3-running-raspbian-stretch-lite/)
+
+* *Following ROS-packages should also be installed:*
+    * sudo apt-get install python-rospkg
+    * (pip3 install rospkg --user)
+
+*Additional information:*
+* in case of a frozen screen at the installation part: "sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/kinetic -j2"
+  try "-j1" instead of "-j2"
+* add the ROS workspace to your.bashrc file through the following command: *echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc*
 
 ## StartUp
 
