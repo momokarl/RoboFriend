@@ -56,8 +56,8 @@ To get the existing *Python2* code compatible for *Python3* following packages s
     * (pip3 install rospkg --user)
 
 * *additional information:*
-    * in case of a frozen screen at the installation part: *"sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/kinetic -j2"*
-        try "-j1" instead of "-j2"
+    * in case of a frozen screen at the installation part: **"sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/kinetic -j2"**
+         try **"-j1"** instead of **"-j2"**
     * add the ROS workspace to your .bashrc file through the following command: *echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc*
 
 ## StartUp
