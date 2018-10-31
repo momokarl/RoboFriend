@@ -1,5 +1,5 @@
-""" 
-TODO: Replace print function with the origin function 
+"""
+TODO: Replace print function with the origin function
       (return sendSerial("R", True)) when teensy connected
 """
 
@@ -92,7 +92,7 @@ def shakeHeadForNo():
 
 def getRawStatus():
 #    return sendSerial("R", True)
-    print('***Faking Teensy Values !! ***')
+#    print('***Faking Teensy Values !! ***')
     return ("Sensors,0500,0200,0100,0300\n")
 
 def sendSerial(commandString, readResponse=False):
