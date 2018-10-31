@@ -17,42 +17,42 @@ import os
 coordinates = []
 
 def face_recog(event_coordinates, event_ros):
-    
+
 	global coordinates
 
 	path = os.path.dirname(os.path.realpath(__file__))
-    
-    #print(talker_opencv.var_coordinates)
-      
-    # load the known faces and embeddings along with OpenCV's Haar
-    # cascade for face detection
+
+	#print(talker_opencv.var_coordinates)
+
+	# load the known faces and embeddings along with OpenCV's Haar
+	# cascade for face detection
 	print("[INFO] loading encodings + face detector...")
 
-    # path of the encodings and the haarcascade file
+	# path of the encodings and the haarcascade file
 	#encodings_path = "/home/pi/catkin_workspace/src/facedetection_coordinates/scripts/encodings.pickle"
 	#haarcascade_path = "/home/pi/catkin_workspace/src/facedetection_coordinates/scripts/haarcascade_frontalface_default.xml"
 	encodings_path = path + "/encodings.pickle"
 	haarcascade_path = path + "/haarcascade_frontalface_default.xml"
-	
-	
-    #detector = cv2.CascadeClassifier("harcascade_frontalface_default.xml")
-    #encodings = open("encodings.pickle", "rb").read()
+
+
+	#detector = cv2.CascadeClassifier("harcascade_frontalface_default.xml")
+	#encodings = open("encodings.pickle", "rb").read()
 	detector = cv2.CascadeClassifier(haarcascade_path)
 	encodings = open(encodings_path, "rb").read()
 	data = pickle.loads(encodings)
 
-    # initialize the MJPG Stream Url to capture the frame
+	# initialize the MJPG Stream Url to capture the frame
 	urls = "http://localhost:8080/?action=stream"
 
-    # set the mjpg stream flag to a default value
+	# set the mjpg stream flag to a default value
 	mjpg_stream = False
 
-    # initialize the video stream and allow the camera sensor to warm up
+	# initialize the video stream and allow the camera sensor to warm up
 	print("[INFO] starting video stream...")
 
-    # selecting the source of  the stream (either PiCamera or stream)
+	# selecting the source of  the stream (either PiCamera or stream)
 	vs = cv2.VideoCapture(urls)
-    #vs = VideoStream(usePiCamera=True).start()
+	#vs = VideoStream(usePiCamera=True).start()
 
 	if vs.isOpened():
 		print("[INFO] Pictures are captured via the mjpg-streamer")
@@ -63,7 +63,7 @@ def face_recog(event_coordinates, event_ros):
 
 	time.sleep(2.0)
 
-    # loop over frames from the video file stream
+	# loop over frames from the video file stream
 	while True:
 		# grab the frame from the threaded video stream and resize it
 		# to 500px (to speedup processing)
@@ -71,7 +71,7 @@ def face_recog(event_coordinates, event_ros):
 			vs = cv2.VideoCapture(urls)
 			stat, frame = vs.read()
 		else:
-		    frame = vs.read()
+			frame = vs.read()
 
 		#Flip camera vertically
 		#frame = cv2.flip(frame, -1)
@@ -93,14 +93,14 @@ def face_recog(event_coordinates, event_ros):
 		boxes = [(y, x + w, y + h, x) for (x, y, w, h) in rects]
 
 		# print("[INFO] Boxes: {}".format(boxes))
-	    
+
 		if boxes != []:
-			print("[INFO] Event set")
-			coordinates = list(boxes[0]).copy()
-			event_coordinates.set()
-			print("[INFO] Coordinates in Submodule: {}".format(coordinates))
-	
-		    # compute the facial embeddings for each face bounding box
+			#print("[INFO] Event set")
+			#coordinates = list(boxes[0]).copy()
+			#event_coordinates.set()
+			#print("[INFO] Coordinates in Submodule: {}".format(coordinates))
+
+			# compute the facial embeddings for each face bounding box
 			encodings = face_recognition.face_encodings(rgb, boxes)
 			names = []
 
@@ -142,6 +142,12 @@ def face_recog(event_coordinates, event_ros):
 				y = top - 15 if top - 15 > 15 else top + 15
 				cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
 					0.75, (0, 255, 0), 2)
+
+			print("[INFO] Event set")
+			coordinates = list(boxes[0]).copy()
+			coordinates.append(name)
+			event_coordinates.set()
+			print("[INFO] Coordinates in Submodule: {}".format(coordinates))
 
 		# display the image to our screen
 		cv2.imshow("Frame", frame)

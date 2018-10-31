@@ -14,7 +14,7 @@ def talker():
 
     event_coordinates = threading.Event()
     event_ros = threading.Event()
-    
+
     facerecog_thread = threading.Thread(
         name = "facedetect",
         target = pi_face_recognition_ros.face_recog,
@@ -22,13 +22,13 @@ def talker():
     )
     facerecog_thread.start()
     msg = Coordinates()
-    
+
     """TODO: Using a mutex to protect global variable """
 
     while facerecog_thread.is_alive():
         if event_coordinates.wait():
             event_coordinates.wait()
-            msg.y_top, msg.right, msg.bottom, msg.x_left = pi_face_recognition_ros.coordinates
+            msg.y_top, msg.right, msg.bottom, msg.x_left,msg.face_name = pi_face_recognition_ros.coordinates
             event_coordinates.clear()
             print("[INFO] Send Data: {}".format(msg))
             pub.publish(msg)
@@ -36,7 +36,7 @@ def talker():
         else:
             print("[INFO] Nothing to send!")
     print("[INFO] END ROS TALKER-NODE")
-    
+
 
 
 if __name__ == '__main__':
