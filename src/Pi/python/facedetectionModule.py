@@ -27,17 +27,19 @@ def listener():
     rospy.spin()
 
 def identify_face(coordinates):
-    if data["name"] != "Unknown":
+    if (coordinates["name"] != "Unknown"):
+        print("[INFO] Known Face!")
         ioWarriorModule.sendToIOWarrior(0, 15, 0) #if it's a known face let the ears light in green
     else:
+        print("[INFO] Unknown Face!")
         ioWarriorModule.sendToIOWarrior(15, 0, 0) #for a unknown face let the ears light in red
 
 def centre_face(coordinates):
-    if (coordinates["x"] < 160):
+    if (coordinates["x"] < 90):
         #move left
         print("[INFO] x: {}, therefore move left".format(coordinates["x"]))
         teensyCommunicator.moveLeftStep()
-    elif(coordinates["x"] > 160):
+    elif(coordinates["x"] > 150):
         #move right
         print("[INFO] x: {}, therefore move right".format(coordinates["x"]))
         teensyCommunicator.moveRightStep()
@@ -46,7 +48,7 @@ def centre_face(coordinates):
         return
 
 def resize_face(coordinates):
-    if (coordinates["x_w"] - coordinates["x"] < 100):   # TODO: check if parameters for ForwardStep and BackwardStep are ok
+    if (coordinates["x_w"] - coordinates["x"] < 70):  # TODO: check if parameters for ForwardStep and BackwardStep are ok
         # move forward
         print("[INFO] Move forward / diff of x: {}".format(coordinates["x_w"] - coordinates["x"]))
         teensyCommunicator.moveForwardStep()
