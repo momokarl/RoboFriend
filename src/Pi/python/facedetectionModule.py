@@ -14,6 +14,7 @@ def callback (data):
     rospy.loginfo("name: " + str(data.face_name))
 
     coordin = {"y" : data.y_top, "x_w" : data.right, "y_h" : data.bottom, "x" : data.x_left, "name" : data.face_name}
+
     centre_face(coordin)
     resize_face(coordin)
 
@@ -22,6 +23,13 @@ def listener():
     rospy.Subscriber("face_cordinates_topic", Coordinates, callback)
 
     rospy.spin()
+
+def known_face(coordinates):
+    if data["name"] != "Unknown":
+        return
+
+
+
 
 def centre_face(coordinates):
     if (coordinates["x"] < 160):

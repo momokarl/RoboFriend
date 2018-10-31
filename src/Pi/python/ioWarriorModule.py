@@ -20,7 +20,7 @@ def sendToIOWarrior(earColorR, earColorG, earColorB, cameraPos = None):
     cmd = 'sudo ./iowarrior/iow ' + str(int(round(earColorR))) + ' ' + str(int(round(earColorG))) + ' ' + str(int(round(earColorB)))
     if cameraPos:
         cmd = cmd + ' ' + str(cameraPos)
-    print("starting cmd: {}".format(cmd)) 
+    print("starting cmd: {}".format(cmd))
     os.system(cmd)
 
 def changeCameraPos(diff):
@@ -35,6 +35,7 @@ def setEarColor(r, g, b):
     earColorR = r
     earColorG = g
     earColorB = b
+    print(r, g, b)
     sendToIOWarrior(r, g, b)
 
 def setEarColorSeries(seriesRGB, repeatNum=1, waitTimeMs=500):
