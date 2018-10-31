@@ -3,15 +3,17 @@ import rospy
 import teensyCommunicator
 from facedetection_coordinates.msg import Coordinates
 
-# TODO: according to the known face let the ears light in diefferent colors
-# TODO: test with a dumy talker until second Robofriend is operational 
+# TODO: according to the known face let the ears light in different colors
+# TODO: test with a dummy talker until second Robofriend is operational
 
 def callback (data):
     rospy.loginfo("y_top: " + str(data.y_top))
     rospy.loginfo("right: " + str(data.right))
     rospy.loginfo("bottom: " + str(data.bottom))
     rospy.loginfo("x_left: " + str(data.x_left))
-    coordin = {"y" : data.y_top, "x_w" : data.right, "y_h" : data.bottom, "x" : data.x_left}
+    rospy.loginfo("name: " + str(data.face_name))
+
+    coordin = {"y" : data.y_top, "x_w" : data.right, "y_h" : data.bottom, "x" : data.x_left, "name" : data.face_name}
     centre_face(coordin)
     resize_face(coordin)
 
