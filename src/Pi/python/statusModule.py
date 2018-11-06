@@ -87,14 +87,17 @@ def StatusInfo():
 
         #print ("Battery= " + str(getBatteryPercent()) + "% ("  + str(getBatteryVoltage()) + " Volt)")
         if statusCount >= batMovingAverageN and getBatteryVoltage() < 12.0:
+            #enter LOW BATTERY STATE 
             batWasLow = True
             speechModule.speakBatteryLow()
             print ("LOW BATTERY - Please Recharge! Robofriend will shutdown automatically at 11.8 Volt!")
         if statusCount >= batMovingAverageN and getBatteryVoltage() < 11.8:
+            #enter SHUTDOWN STATE
             speechModule.speakBatteryShutdown()
             sleep(5)
             os.system("init 0")
         if batWasLow and getBatteryVoltage() > 12.15:
+            #enter RECHARGE STATE
             batWasLow = False
             speechModule.speakOnRecharge()
         #print ("IRSensors="+str(getIRLeft())+"/"+str(getIRMiddle())+"/"+str(getIRRight()))

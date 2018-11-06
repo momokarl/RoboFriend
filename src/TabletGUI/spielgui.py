@@ -86,10 +86,10 @@ def ipauswahl():
 					UDP_IP = '192.168.1.137'
 					ip = 1
 				if iphotspot.pressed(pygame.mouse.get_pos()):
-					UDP_IP = '192.168.0.100' 
+					UDP_IP = '192.168.0.100'
 					ip = 1
 	sendtopi("IPcheck")
-					
+
 def gamemenue():
 	#Hauptmenue
 	global GameActive
@@ -112,21 +112,22 @@ def gamemenue():
 	spiel4Symbol=Buttons.Button()
 	admin =Buttons.Button()
 	spiel1.create_button(screen, GREEN, 100, 100, B_LENGTH,    B_HEIGHT,       "Spiel 1", WHITE, 0) #dunkelgruen button, weisse schrift
-	spiel1Symbol.create_button(screen, GREEN, 230, 125, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/construction.png") 
+	spiel1Symbol.create_button(screen, GREEN, 230, 125, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/construction.png")
 	spiel2.create_button(screen, GREEN, 100, 300, B_LENGTH,    B_HEIGHT,       "Spiel 2", WHITE, 0)
-	spiel1Symbol.create_button(screen, GREEN, 230, 325, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel2.png") 
+	spiel1Symbol.create_button(screen, GREEN, 230, 325, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel2.png")
 	spiel3.create_button(screen, GREEN, 400, 100, B_LENGTH,    B_HEIGHT,       "Spiel 3", WHITE, 0)
-	spiel3Symbol.create_button(screen, GREEN, 530, 125, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel3.png") 
+	spiel3Symbol.create_button(screen, GREEN, 530, 125, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel3.png")
 	spiel4.create_button(screen, GREEN, 400, 300, B_LENGTH,    B_HEIGHT,       "Spiel 4", WHITE, 0)
-	spiel4Symbol.create_button(screen, GREEN, 530, 325, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel4.png") 
+	spiel4Symbol.create_button(screen, GREEN, 530, 325, S_LENGTH,    S_HEIGHT,       "", WHITE, "data/spiel4.png")
 	admin.create_button(screen, GREEN, 250, 500, B_HEIGHT,    B_HEIGHT,       "Robot Control", WHITE, "data/gear.png")
 	pygame.display.flip()
-		
+
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
+				#send to pi
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE or event.unicode == 'q':
 					print "bye!"
@@ -199,7 +200,7 @@ def game1():
 	#isFilled= False
 	while True:
 		GameActive = True
-		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
@@ -241,7 +242,7 @@ def game1():
 		ans=0
 		#as long as answer ist incorrect:
 		while ans == 0:
-			for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+			for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
@@ -259,7 +260,7 @@ def game1():
 			#checking if data is right
 			#if correct ans = 1
 			while isFilled == False: #print("Waiting for data")
-				for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+				for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 					if event.type == pygame.QUIT:
 						pygame.quit()
 						sys.exit()
@@ -335,7 +336,7 @@ def draw_objects(info):
 			pygame.draw.rect(screen, DGREEN, (600,400, B_HEIGHT, B_HEIGHT))
 			pygame.draw.rect(screen, RED, (800,400, B_HEIGHT, B_HEIGHT))
 	pygame.display.flip()
-	
+
 def game2():
 	img_size= 300
 	screen.fill(SCREEN_COLOR)#hellblau
@@ -345,7 +346,7 @@ def game2():
 	#load font, prepare values
 	text=Buttons.Button()
 	text.write_text(screen, "Spiel 2", BLACK, B_LENGTH, B_HEIGHT, 50, 0)
-	
+
 	#GAME 2 screen
 	sendtopi("sound;play;data/robogame2.wav")# Spiel2 Erklaerung
 	start=Buttons.Button()
@@ -368,9 +369,9 @@ def game2():
 					gamemenue()
 				elif start.pressed(pygame.mouse.get_pos()):
 					starting = 1
-	
+
 	positions = [(150,375),(500,375),(850,375)]
-	
+
 	#Buttons
 	happy=Buttons.Button()
 	sad=Buttons.Button()
@@ -399,7 +400,7 @@ def game2():
 		text=Buttons.Button()
 		text.write_text(screen, "Spiel 2", BLACK, B_LENGTH, B_HEIGHT, 50, 0)
 		text2=Buttons.Button()
-		i = i+1 # FIRST ROUND 
+		i = i+1 # FIRST ROUND
 		#displaying of emoticons !
 		if (i % 2) == 0: #2.; 4.; 6.; Runde: bub
 			happy.create_button(screen, WHITE, positions[0][0], positions[0][1], img_size, img_size, "", WHITE, 'data/happyB.jpg')
@@ -433,7 +434,7 @@ def game2():
 		sendtopi("sound;play;"+storysound) #SOund 1_spiel 2 blabla *ist happy. lets see if u find happy face, just click on it*
 		ans = 0
 		while ans == 0:
-			for event in [pygame.event.wait()]+pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+			for event in [pygame.event.wait()]+pygame.event.get():# maybe need to copy this also into the while ans == wrong
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
@@ -484,7 +485,7 @@ def game2():
 					gamemenue()
 				if start.pressed(pygame.mouse.get_pos()):
 					game2()
-					
+
 def game3():
 	screen.fill(SCREEN_COLOR)#hellblau
 	pygame.display.flip()
@@ -522,9 +523,9 @@ def game3():
 	# back=Buttons.Button()
 	# back.create_button(screen, GREEN, 100, 100, B_LENGTH, B_HEIGHT, "ZURUECK", WHITE, 0)
 	# text=Buttons.Button()
-	# text.write_text(screen, "GAME THREE", BLACK, B_LENGTH, B_HEIGHT, 50, 0)			
+	# text.write_text(screen, "GAME THREE", BLACK, B_LENGTH, B_HEIGHT, 50, 0)
 	while True:
-		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
@@ -586,7 +587,7 @@ def game3():
 		sendtopi("sound;play;"+ran_s)#"animal sound"
 		#as long as answer ist incorrect:
 		while ans == 0:
-			for event in [pygame.event.wait()]+pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+			for event in [pygame.event.wait()]+pygame.event.get():# maybe need to copy this also into the while ans == wrong
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
@@ -664,7 +665,7 @@ def game4():
 	pygame.display.flip()
 	GameActive = True
 	while True:
-		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+		for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
@@ -678,7 +679,7 @@ def game4():
 					gamemenue()
 		#as long as invalid rfid data (baustein statt tier):
 		while isFilled == False: #print("Waiting for data")
-			for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong 
+			for event in pygame.event.get():# maybe need to copy this also into the while ans == wrong
 				if event.type == pygame.QUIT:
 					pygame.quit()
 					sys.exit()
@@ -708,7 +709,7 @@ def game4():
 			print("rfid:"+str(rfid))
 			time.sleep(4) #wait 5 seconds for sound to be over
 		isFilled = False
-								
+
 def RoboControl():
 	arrow_size = 150
 	arrow_start = 150
@@ -741,8 +742,8 @@ def RoboControl():
 	co= 0
 	# drive= F, R, B, L
 	drive = [0, 0, 0, 0]
-	
-	
+
+
 	while True:
 		#key mode abfrage
 		keys=pygame.key.get_pressed()
@@ -807,7 +808,7 @@ def RoboControl():
 			else:
 				drive = [0, 0, 1, 0]
 				sendtopi("move;backward")
-			co = co+1			
+			co = co+1
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				pygame.quit()
@@ -836,7 +837,7 @@ def RoboControl():
 					sendtopi("face;smile;decrease")
 				if event.key == pygame.K_4: #gruen
 					print "Smile +"
-					sendtopi("face;smile;increase")	
+					sendtopi("face;smile;increase")
 			elif event.type == MOUSEBUTTONDOWN:
 				if back.pressed(pygame.mouse.get_pos()):
 					gamemenue()
@@ -847,31 +848,31 @@ def RoboControl():
 					print "left!"
 					sendtopi("move;left;step")
 				if right.pressed(pygame.mouse.get_pos()):
-					print "right!"	
+					print "right!"
 					sendtopi("move;right;step")
 				if backward.pressed(pygame.mouse.get_pos()):
 					print "back!"
-					sendtopi("move;backward;step")		
+					sendtopi("move;backward;step")
 				if smileUp.pressed(pygame.mouse.get_pos()):
 					print "Smile +"
-					sendtopi("face;smile;increase")		
+					sendtopi("face;smile;increase")
 				if smileDown.pressed(pygame.mouse.get_pos()):
 					print "Smile -"
 					sendtopi("face;smile;decrease")
 				if eyeUp.pressed(pygame.mouse.get_pos()):
 					print "eye /\\"
-					sendtopi("face;eyes;up")	
+					sendtopi("face;eyes;up")
 				if eyeDown.pressed(pygame.mouse.get_pos()):
-					print "eye \/"	
+					print "eye \/"
 					sendtopi("face;eyes;down")
 				if eyeLeft.pressed(pygame.mouse.get_pos()):
 					print "eye <"
-					sendtopi("face;eyes;left")		
+					sendtopi("face;eyes;left")
 				if eyeRight.pressed(pygame.mouse.get_pos()):
 					print "eye >"
-					sendtopi("face;eyes;right")		
+					sendtopi("face;eyes;right")
 
-def sendtopi(i):	
+def sendtopi(i):
 	global UDP_IP, UDP_PORT
 	BytesToSend = bytes(":RUN:" + str(i) + ":EOL:")
 	try:
@@ -894,8 +895,8 @@ def ReadFromPi():
 		data = ""
 		rfid = ""
 		tempData, addr = robo.recvfrom(30)
-		print("Abfrage " + str(count))				
-		
+		print("Abfrage " + str(count))
+
 		print(data)
 		"""data = data.replace("'","")
 		data = data.replace("[","")
@@ -908,8 +909,8 @@ def ReadFromPi():
 		endFlagIndex = data.find(endFlag)
 		if endFlagIndex == -1:
 			continue
-			
-		data = data[:endFlagIndex] 
+
+		data = data[:endFlagIndex]
 		dataArray = data.split(';')
 		if dataArray[0] == "battery":
 			try:
@@ -932,7 +933,7 @@ def ReadFromPi():
 
 def ScreenUpdate():
 	global bat_prozent
-	
+
 	while True:
 		akku = "Akku: "+str(bat_prozent)+"V"
 		print("akku aktualisierung")
@@ -944,7 +945,7 @@ def ScreenUpdate():
 		pygame.display.flip()
 		#bat_prozent = bat_prozent+1
 		time.sleep(3)
-		
+
 def main():
 	ReadFromRobo = threading.Thread(target=ReadFromPi)
 	ReadFromRobo.daemon = True
@@ -957,8 +958,8 @@ def main():
 	BatToScreen.daemon = True
 	BatToScreen.start()
 	gamemenue()
-	
-	
-	
+
+
+
 if __name__ == '__main__':
 	main()
