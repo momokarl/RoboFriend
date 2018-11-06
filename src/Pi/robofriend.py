@@ -47,11 +47,8 @@ def handler_stop_signals(signum, frame):
 def main():
 	global runFlag
 
-	# create and initialize states
 	# starting modules
-	# enter Init State
-	# start while and check queueu
-	rfidModule.start()		# implement mechanism to stop executing thread
+	rfidModule.start()
 	webserverModule.start()
 	statusModule.start()
 	gameCommunicator.start()
@@ -64,8 +61,6 @@ def main():
 	signal.signal(signal.SIGINT, handler_stop_signals)
 	signal.signal(signal.SIGTERM, handler_stop_signals)
 	#print("*** startup completed! ***")
-
-	# create thread
 
 	while runFlag: time.sleep(0.5) # keep program running until stopped
 

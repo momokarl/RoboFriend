@@ -127,7 +127,6 @@ def gamemenue():
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
-				#send to pi
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE or event.unicode == 'q':
 					print "bye!"

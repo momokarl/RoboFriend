@@ -18,7 +18,6 @@ UDP_IP = ''
 initDone = False
 runFlag = True
 
-
 # This function is used to send information to the gamegui and can be called by the Thread serialRFIDread (for RFID data) and chooseAction (for battery information)
 def sendtogui(i):
     global UDP_PORT, SendToApp, IP
@@ -50,18 +49,7 @@ def data_listener():
     endFlag = ":EOL:"
     receivedData = ""
     while runFlag:
-        tempData, addr = sock.recvfrom(50) # blocks until message is receieved
-        # if actual state == idle State or StateRun == True:
-            # if StateRun == False:
-                # send message to stateHandler to change stateRun
-                # set StateRun to True
-
-                # TODO stateHandler: start change state to GUICommState
-                #                    start serialRFID
-                #                    stop autoSpeak
-
-            #if StateRun == True: eigentliche Funktion
-
+        tempData, addr = sock.recvfrom(50)
         receivedData += tempData
         startFlagIndex = receivedData.find(startFlag)
         if startFlagIndex != -1:
@@ -74,10 +62,6 @@ def data_listener():
         receivedData = receivedData[:endFlagIndex] # ab dieser Zeile ist nur noch Befehlskette da (ohne start/endflag)
         IP = addr[0]
         print('***** received data from app (' + str(IP) + ') ******')
-        # if receivedDate == "quit":
-        #send message to stateRun to switch into idle state
-        #set StateRun to false
-        #else
         chooseAction(receivedData)
 
     # after endless thread-loop stopped
