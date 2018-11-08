@@ -67,7 +67,8 @@ def main():
 
 	# create thread
 
-	while runFlag: time.sleep(0.5) # keep program running until stopped
+	while runFlag:
+		time.sleep(0.5) # keep program running until stopped
 
 if __name__ == '__main__':
 	main()
