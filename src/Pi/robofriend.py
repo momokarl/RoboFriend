@@ -20,6 +20,7 @@ import teensyCommunicator as teensyCommunicator
 import ioWarriorModule as ioWarriorModule
 import speechModule as speechModule
 import facedetectionModule as facedetectionModule
+import stateModule as stateModule
 
 
 # globals
@@ -46,6 +47,8 @@ def handler_stop_signals(signum, frame):
 
 def main():
 	global runFlag
+
+	stateModule.start()
 
 	# create and initialize states
 	# starting modules
