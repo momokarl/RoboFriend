@@ -29,6 +29,8 @@ runFlag = True
 def stop():
 	global runFlag
 
+	# TODO: tell state hanlder via message queue that shutdown is triggered
+
 	print("*** shutting down ... ***")
 	rfidModule.stop()
 	webserverModule.stop()
@@ -49,20 +51,8 @@ def main():
 	global runFlag
 
 	stateModule.start()
-
-	# create and initialize states
-	# starting modules
-	# enter Init State
-	# start while and check queueu
-	rfidModule.start()		# implement mechanism to stop executing thread
-	webserverModule.start()
-	statusModule.start()
-	gameCommunicator.start()
-	keyboardModule.start()
-	faceModule.drawFace()
 	facedetectionModule.listener()
 	print("init done! register signal handlers...")
-
 	# setting up signal handlers for shutdown
 	signal.signal(signal.SIGINT, handler_stop_signals)
 	signal.signal(signal.SIGTERM, handler_stop_signals)
