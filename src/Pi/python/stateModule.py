@@ -3,8 +3,22 @@ import threading
 import time
 from transitions import Machine
 
-class Robo():
-    pass
+class Robo(Machine):
+    def __init__(self):
+        states = [
+                'init', 'idle', 'keyboard',
+                'face_audio_detection','gui_communicator',
+                'webserver', 'low_battery']
+        Machine.__init__(self, states = states, initial = 'init')
+        #self.add_transition(trigger : 'leave_init', source : 'init', dest : 'idle', before = 'say_goodbye')
+        self.add_transition('leave_init', 'init', 'idle',
+                         before='say_goodbye',after = 'say_hello')
+
+    def say_goodbye(self):
+        print("[INFO] Goodbye init state")
+
+    def say_hello(self):
+        print("[INFO] Hello idle state")
 
 runFlag = True
 
@@ -16,14 +30,13 @@ def start():
 
 def state_handler():
     print("[INFO] Within state handler thread ...")
-    state_config()
-
-def state_config():
-    states = ['init', 'idle', 'keyboard', 'face_audio_detection',
-              'gui_communicator', 'webserver', 'low_battery']
     robostate = Robo()
-    stat = Machine(model = robostate, states = states, initial = 'init')
-    while runFlag:
-        #print(robostate.state)
-        print("[INFO] We are in the state: {}".format(robostate.state))
-        time.sleep(2)
+    #robostate.leave_init()
+    print("[INFO] Actual state {}".format(robostate.state))
+    robostate.leave_init()
+    print("[INFO] Actual state {}".format(robostate.state))
+
+
+    # while runFlag:
+    #     print("[INFO] We are in the state: {}".format(robostate.state))
+    #     time.sleep(2)
