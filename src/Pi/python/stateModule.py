@@ -24,7 +24,7 @@ class Robo(Machine):
 
         Machine.__init__(self, states = states, initial = 'init')
 
-        self.add_transition(trigger = 'leave_init', source = 'init', dest = 'idle',
+        self.add_transition(trigger = 'leave_init_state', source = 'init', dest = 'idle',
                          before = 'start_modules', after = 'say_hello')
 
     def start_modules(self):
@@ -37,8 +37,9 @@ class Robo(Machine):
         print("[INFO] Leaving init state")
 
     def say_hello(self):
-        print("[INFO] entering idle state")
+        print("[INFO] Entering idle state")
 
+# global variables
 runFlag = True
 
 def start():
@@ -48,8 +49,9 @@ def start():
     threadHandler.start()
 
 def state_handler():
+    print("[INFO] State thread started")
     robostate = Robo()
-    robostate.leave_init()  # to leave init state and enter idle state
+    robostate.leave_init_state()  # to leave init state and enter idle state
 
     while runFlag:
          #print("[INFO] We are in the state: {}".format(robostate.state))
