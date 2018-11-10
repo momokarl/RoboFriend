@@ -21,6 +21,7 @@ import ioWarriorModule as ioWarriorModule
 import speechModule as speechModule
 import facedetectionModule as facedetectionModule
 import stateModule as stateModule
+import systemModule as systemModule
 
 
 # globals
@@ -32,6 +33,7 @@ def stop():
 	# TODO: tell state hanlder via message queue that shutdown is triggered
 
 	print("*** shutting down ... ***")
+	systemModule.roscore_shutdown()
 	rfidModule.stop()
 	webserverModule.stop()
 	statusModule.stop()
@@ -50,15 +52,16 @@ def handler_stop_signals(signum, frame):
 def main():
 	global runFlag
 
-	stateModule.start()
+	stateModule.start()	# starts all threads except ros listener
+	systemModule.roscore_start()
+	time.sleep(0.5)		# wait for roscore initialization
 	facedetectionModule.listener()
 	print("init done! register signal handlers...")
+
 	# setting up signal handlers for shutdown
 	signal.signal(signal.SIGINT, handler_stop_signals)
 	signal.signal(signal.SIGTERM, handler_stop_signals)
-	#print("*** startup completed! ***")
-
-	# create thread
+	print("*** startup completed! ***")
 
 	while runFlag:
 		time.sleep(0.5) # keep program running until stopped
