@@ -87,7 +87,7 @@ def StatusInfo():
 
         #print ("Battery= " + str(getBatteryPercent()) + "% ("  + str(getBatteryVoltage()) + " Volt)")
         if statusCount >= batMovingAverageN and getBatteryVoltage() < 12.0:
-            #enter LOW BATTERY STATE 
+            #enter LOW BATTERY STATE
             batWasLow = True
             speechModule.speakBatteryLow()
             print ("LOW BATTERY - Please Recharge! Robofriend will shutdown automatically at 11.8 Volt!")
