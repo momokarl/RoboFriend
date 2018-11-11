@@ -3,6 +3,7 @@ import os
 import time
 import subprocess
 import signal
+import queue
 
 
 # own modules
@@ -10,6 +11,7 @@ import speechModule
 
 # globals
 roscore_pid = 0
+queue = queue.Queue()
 
 def shutdown():
     speechModule.speakShutdown()
@@ -32,3 +34,13 @@ def roscore_shutdown():
         print("[INFO] Roscore terminated!")
     else:
         pass
+
+def queue_write(item):
+    if queue.full() != False:
+        queue.put(item)
+    else:
+        print("[INFO] Queue is full!")
+        return False
+
+def queue_get():
+    return queue.get()
