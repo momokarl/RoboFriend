@@ -8,6 +8,7 @@ import faceModule
 import soundModule
 import speechModule
 import gameCommunicator
+import systemModule
 
 # globals
 UDP_PORT = 9000 #socket port
@@ -51,17 +52,6 @@ def data_listener():
     receivedData = ""
     while runFlag:
         tempData, addr = sock.recvfrom(50) # blocks until message is receieved
-        # if actual state == idle State or StateRun == True:
-            # if StateRun == False:
-                # send message to stateHandler to change stateRun
-                # set StateRun to True
-
-                # TODO stateHandler: start change state to GUICommState
-                #                    start serialRFID
-                #                    stop autoSpeak
-
-            #if StateRun == True: eigentliche Funktion
-
         receivedData += tempData
         startFlagIndex = receivedData.find(startFlag)
         if startFlagIndex != -1:
@@ -74,11 +64,13 @@ def data_listener():
         receivedData = receivedData[:endFlagIndex] # ab dieser Zeile ist nur noch Befehlskette da (ohne start/endflag)
         IP = addr[0]
         print('***** received data from app (' + str(IP) + ') ******')
-        # if receivedDate == "quit":
-        #send message to stateRun to switch into idle state
-        #set StateRun to false
-        #else
-        chooseAction(receivedData)
+
+        if systemModule.queue_put(receivedData) != True:
+            print("[INFO] Error queue_put()")
+        else:
+            pass
+
+        #chooseAction(receivedData)
 
     # after endless thread-loop stopped
     sock.close()
