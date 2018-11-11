@@ -35,7 +35,7 @@ def roscore_shutdown():
     else:
         pass
 
-def queue_write(item):
+def queue_put(item):
     if queue.full() != False:
         queue.put(item)
     else:
