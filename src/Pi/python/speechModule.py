@@ -126,6 +126,7 @@ def autoSpeak():
     while runFlag:
         time.sleep(random.randint(45, 90))
         if statusModule.isIdle():
+            #print("[INFO] autoSpeak activated")
             speakRandom({
                 'english': ['I am bored.'],
                 'german' : ['Mir ist langweilig.']
@@ -141,4 +142,4 @@ speechEngine.setProperty('rate', wordRate)
 speechEngine.setProperty('volume', 1.0)
 speak('i am robofriend')
 speechEngine.setProperty('voice', language)
-startAutoRandomSpeak()
+#startAutoRandomSpeak()
