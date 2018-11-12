@@ -36,8 +36,9 @@ def roscore_shutdown():
         pass
 
 def queue_put(item):
-    if queue.full() != False:
+    if queue.full() != True:
         queue.put(item)
+        return True
     else:
         print("[INFO] Queue is full!")
         return False

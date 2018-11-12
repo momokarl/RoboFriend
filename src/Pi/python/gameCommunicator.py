@@ -1,6 +1,7 @@
 import socket
 import threading
 import sys
+import time
 
 # own modules
 import teensyCommunicator
@@ -50,8 +51,16 @@ def data_listener():
     startFlag = ":RUN:"
     endFlag = ":EOL:"
     receivedData = ""
+    test_list = []
+    transmitter_name = "gui_communicator"
     while runFlag:
-        tempData, addr = sock.recvfrom(50) # blocks until message is receieved
+        #tempData, addr = sock.recvfrom(50) # blocks until message is receieved
+
+        time.sleep(15)
+        tempData = ":RUN:move;forward;step:EOL:"
+
+        print("[INFO] Testsequence started!!!")
+
         receivedData += tempData
         startFlagIndex = receivedData.find(startFlag)
         if startFlagIndex != -1:
@@ -62,10 +71,14 @@ def data_listener():
             continue
 
         receivedData = receivedData[:endFlagIndex] # ab dieser Zeile ist nur noch Befehlskette da (ohne start/endflag)
-        IP = addr[0]
+        #IP = addr[0]
         print('***** received data from app (' + str(IP) + ') ******')
 
-        if systemModule.queue_put(receivedData) != True:
+        test_list.append(receivedData)
+        test_list.append(transmitter_name)
+        print("[INFO] Test-List: {}".format(test_list))
+
+        if systemModule.queue_put(test_list) != True:
             print("[INFO] Error queue_put()")
         else:
             pass
