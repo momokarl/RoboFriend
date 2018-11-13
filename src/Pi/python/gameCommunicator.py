@@ -74,8 +74,9 @@ def data_listener():
         #IP = addr[0]
         print('***** received data from app (' + str(IP) + ') ******')
 
-        test_list.append(receivedData)
         test_list.append(transmitter_name)
+        test_list.append(receivedData)
+        # Message to transmitt: ["gui_communicator", "receivedData"]
         print("[INFO] Test-List: {}".format(test_list))
 
         if systemModule.queue_put(test_list) != True:
