@@ -60,7 +60,7 @@ def main():
 	# setting up signal handlers for shutdown
 	signal.signal(signal.SIGINT, handler_stop_signals)
 	signal.signal(signal.SIGTERM, handler_stop_signals)
-	print("*** startup completed! ***")
+	#print("*** startup completed! ***")
 
 	while runFlag: time.sleep(0.5) # keep program running until stopped
 
