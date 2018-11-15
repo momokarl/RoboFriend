@@ -91,9 +91,9 @@ def shakeHeadForNo():
     sendSerial("D -50 50 10")
 
 def getRawStatus():
-#    return sendSerial("R", True)
+    return sendSerial("R", True)
 #    print('***Faking Teensy Values !! ***')
-    return ("Sensors,0500,0200,0100,0300\n")
+#    return ("Sensors,0500,0200,0100,0300\n")
 
 def sendSerial(commandString, readResponse=False):
     global send_lock, ser
@@ -101,11 +101,13 @@ def sendSerial(commandString, readResponse=False):
     send_lock.acquire()
     print("sending serial command: " + str(commandString))
     try:
-        ser.write(str(commandString) + "\r")
+        ser.write(str.encode(str(commandString) + "\r"))
         if readResponse:
             response = str(ser.readline())
-    except:
+    except Exception as e:
         print('***Serial write error ***')
+        print(type(e))
+        print(e.args)
 
     send_lock.release()
 
