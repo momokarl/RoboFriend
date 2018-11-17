@@ -45,26 +45,23 @@ class Robo(Machine):
         # transition from idle state to init state
         #self.add_transition(trigger = 'idle_to_low_battery', source = 'idle', dest = 'low_battery')
 
-        # transition from gui communicator state to idle state
-        self.add_transition(trigger = 'gui_communcation_to_idle', source = 'gui_communicator', dest = 'idle')
-
         # transition from every state to idle states
-        self.add_transition(trigger = 'to_idle', source = '*', dest = 'idle')
+        self.add_transition(trigger = 'trigger_to_idle', source = '*', dest = 'idle')
 
         # transition from every state to gui communicator
-        self.add_transition(trigger = 'to_gui_communicator', source = '*', dest = 'gui_communicator')
+        self.add_transition(trigger = 'trigger_to_gui_communicator', source = '*', dest = 'gui_communicator', after = 'gui_communicate_command_exec') # after function nicht vergessen und command übergeben
 
         # transition from every state to keyboard
-        self.add_transition(trigger = 'to_keyboard', source = '*', dest = 'keyboard')
+        self.add_transition(trigger = 'trigger_to_keyboard', source = '*', dest = 'keyboard')
 
         # transition from every state to face/audio detection
-        self.add_transition(trigger = 'to_face_audio_detection', source = '*', dest = 'face_audio_detection')
+        self.add_transition(trigger = 'trigger_to_face_audio_detection', source = '*', dest = 'face_audio_detection')
 
         # transition from every state to webserver
-        self.add_transition(trigger = 'to_webserver', source = '*', dest = 'webserver')
+        self.add_transition(trigger = 'trigger_to_webserver', source = '*', dest = 'webserver')
 
         # transition from every state to low battery
-        self.add_transition(trigger = 'to_low_battery', source = '*', dest = 'low_battery')
+        self.add_transition(trigger = 'trigger_to_low_battery', source = '*', dest = 'low_battery')
 
 
 
@@ -122,12 +119,12 @@ class Robo(Machine):
 robostate = Robo()
 runFlag = True
 state_changer = {
-    "idle" : to_idle,
-    "gui_communicator" : to_gui_communicator,
-    "keyboard" : to_keyboard,
-    "face_audio_detection" : to_face_audio_detection,
-    "webserver" : to_webserver,
-    "low_battery" : to_low_battery
+    "idle" : state_to_idle,
+    "gui_communicator" : state_to_gui_communicator,
+    "keyboard" : state_to_keyboard,
+    "face_audio_detection" : state_to_face_audio_detection,
+    "webserver" : state_to_webserver,
+    "low_battery" : state_to_low_battery
 }
 
 def start():
@@ -140,7 +137,9 @@ def state_handler():
     global robostate
     print("[INFO] State thread started")
     actual_state = ""
-    valid_transmitter = ["gui_communicator"]
+    valid_transmitter = ["gui_communicator", "keyboard",
+                         "face_audio_detection", "webserver",
+                         "low_battery"]
 
     robostate.init_to_idle()  # to leave init state and enter idle state
     actual_state = robostate.state
@@ -150,53 +149,72 @@ def state_handler():
     else:
         while runFlag:
             received_message = SystemModule.queue_get()
-            print("[INFO] Message received!!!")
-            print("[INFO] Received Message: {}".format(received_message))
-            if not received_message[0] in valid_transmitter:
+            print("[INFO]Message received! Received Message: {}".format(received_message))
+            transmitter, command = received_message
+            if not transmitter in valid_transmitter:
                 print("[INFO] Message from an invalid transmitter received!")
+                continue
             else:
-                print("[INFO] First Part of received message: {}, second Part: {}".format(received_message[0], received_message[1]))
+                print("[INFO] First Part of received message: {}, second Part: {}".format(transmitter, command))
 
                 if actual_state == "idle":
-                    state_changer[received_message[0]](received_message[1])
+                    state_changer[transmitter](command)
                 elif actual_state == "gui_communicator":
+                    check_transition_gui_communicator(transmitter, command)
                     #TODO: check if transition into received state is allowed
-                    #TODO: Pass two arguments 1) from which state  2) command
-                    #TODO:
+                    #TODO: Pass two arguments 1) from which state 2) command
 
 
-                    # als letzter schritt wenn transition statfinden soll der übergang
-                    # state_changer[received_message[0]](received_message[1])
+
+                    #TODO: als letzter schritt wenn transition statfinden soll der übergang
+                    # if check_transition_gui_communicator == True:
+                    # state_changer[transmitter](command)
                 elif actual_state == "keyboard":
-                    #TODO:
+                    pass
                 elif actual_state == "webserver":
-                    #TODO:
-                elif actual_state == face_audio_detection:
-                    #TODO:
-                elif actual_state == low_battery:
-                    #TODO:
+                    pass
+                elif actual_state == "face_audio_detection":
+                    pass
+                elif actual_state == "low_battery":
+                    pass
                 else:
                     pass
-def to_idle():
-    global robostate
-    robostate.to_idle() # to trigger a transition to idle state
 
-def to_gui_communicator(command):
-    global robostate
-    robostate.to_gui_communicator(command) # to trigger a transition to gui communicator state
+def check_transition_gui_communicator(destination, command):
+    if (destination != "gui_communicator"):
 
-def to_keyboard(command):
-    global robostate
-    robostate.to_keyboard() # to trigger a transition to keyboard state
+    else:
+        #return True da nächster command auch von gui communicator
+        #gui_communicate_command_exec(command)
 
-def to_face_audio_detection():
-    global robostate
-    robostate.to_face_audio_detection() # to trigger a transition to face/audio detection state
 
-def to_webserver():
-    global robostate
-    robostate.to_webserver() # to trigger a transition to webserver state
 
-def to_low_battery():
+
+def state_to_idle():
     global robostate
-    robostate.to_low_battery() # to trigger a transition to low battery state
+    robostate.trigger_to_idle() #trigger a transition to idle state
+
+def state_to_gui_communicator(command):
+    global robostate
+    robostate.trigger_to_gui_communicator(command) #trigger a transition to gui communicator state and execute gui_communicate_command_exec
+
+def state_to_keyboard(command):
+    global robostate
+    robostate.trigger_to_keyboard(command) #trigger a transition to keyboard state
+
+def state_to_face_audio_detection():
+    global robostate
+    robostate.trigger_to_face_audio_detection() #trigger a transition to face/audio detection state
+
+def state_to_webserver():
+    global robostate
+    robostate.trigger_to_webserver() #trigger a transition to webserver state
+
+def state_to_low_battery():
+    global robostate
+    robostate.trigger_to_low_battery() #trigger a transition to low battery state
+
+
+def gui_communicate_command_exec(command):
+    #TODO: execute command
+    gameCommunicator.chooseAction(command)
