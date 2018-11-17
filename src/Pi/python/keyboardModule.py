@@ -23,6 +23,7 @@ lastSay = None
 
 def handleKeyboard():
     global runFlag, speechBuffer, shutdownKeyword, quitKeyword, lastSay
+    transmitter = "keyboard"
 
     while runFlag:
         try:
